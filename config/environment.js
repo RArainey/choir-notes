@@ -4,7 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'choir-notes',
     environment: environment,
-    baseURL: '/',
+    baseURL: '/choir-notes',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
