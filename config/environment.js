@@ -40,10 +40,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.locationType = 'hash';
-    ENV.baseURL = '/choir-notes/';
-    ENV.rootURL = '/ember-flows-generator/';
+
   }
 
-  return JSON.stringify(ENV);
+  return ENV;
 };
