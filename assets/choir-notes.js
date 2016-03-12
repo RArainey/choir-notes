@@ -41,19 +41,30 @@ define('choir-notes/components/staff-column', ['exports', 'ember'], function (ex
 		click: function click(e) {
 			var target = e.target;
 			var index = $(target).index();
+			var note = undefined;
 
-			if (this.domIndex == null) {
-				var note = document.createElement("img");
+			// Create the note.
+			if (this.domIndex === null) {
+				note = document.createElement("img");
 				note.src = 'assets/images/note.png';
-
+				note.className = 'note';
 				target.appendChild(note);
 				this.domIndex = index;
-			} else if (target.tagName != "IMG") {
-				var note = target.parentElement.children[this.domIndex].children[0];
 
-				target.appendChild(note);
-				this.domIndex = index;
-			}
+				// User tapped/clicked elsewhere, move the note.
+			} else if (target.tagName === "DIV" && this.domIndex !== index) {
+					note = target.parentElement.children[this.domIndex].children[0];
+					target.appendChild(note);
+					this.domIndex = index;
+
+					// User tapped/clicked the note or its location, remove it.
+				} else if (target.tagName === "DIV" && this.domIndex === index) {
+						target.children[0].remove();
+						this.domIndex = null;
+					} else if (target.tagName === "IMG") {
+						target.remove();
+						this.domIndex = null;
+					}
 		}
 	});
 });
@@ -263,7 +274,7 @@ define("choir-notes/templates/application", ["exports"], function (exports) {
             "column": 0
           },
           "end": {
-            "line": 6,
+            "line": 5,
             "column": 16
           }
         },
@@ -280,12 +291,6 @@ define("choir-notes/templates/application", ["exports"], function (exports) {
         var el2 = dom.createTextNode("Choir Notes");
         dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode("\n");
-        dom.appendChild(el0, el1);
-        var el1 = dom.createElement("p");
-        var el2 = dom.createTextNode("Click to place notes!");
-        dom.appendChild(el1, el2);
-        dom.appendChild(el0, el1);
         var el1 = dom.createTextNode("\n\n");
         dom.appendChild(el0, el1);
         var el1 = dom.createComment("");
@@ -298,12 +303,12 @@ define("choir-notes/templates/application", ["exports"], function (exports) {
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
         var morphs = new Array(2);
-        morphs[0] = dom.createMorphAt(fragment, 4, 4, contextualElement);
-        morphs[1] = dom.createMorphAt(fragment, 6, 6, contextualElement);
+        morphs[0] = dom.createMorphAt(fragment, 2, 2, contextualElement);
+        morphs[1] = dom.createMorphAt(fragment, 4, 4, contextualElement);
         dom.insertBoundary(fragment, null);
         return morphs;
       },
-      statements: [["content", "outlet", ["loc", [null, [4, 0], [4, 10]]]], ["content", "column-group", ["loc", [null, [6, 0], [6, 16]]]]],
+      statements: [["content", "outlet", ["loc", [null, [3, 0], [3, 10]]]], ["content", "column-group", ["loc", [null, [5, 0], [5, 16]]]]],
       locals: [],
       templates: []
     };
@@ -313,7 +318,9 @@ define("choir-notes/templates/components/column-group", ["exports"], function (e
   exports["default"] = Ember.HTMLBars.template((function () {
     return {
       meta: {
-        "fragmentReason": false,
+        "fragmentReason": {
+          "name": "triple-curlies"
+        },
         "revision": "Ember@2.3.1",
         "loc": {
           "source": null,
@@ -322,8 +329,8 @@ define("choir-notes/templates/components/column-group", ["exports"], function (e
             "column": 0
           },
           "end": {
-            "line": 12,
-            "column": 7
+            "line": 15,
+            "column": 6
           }
         },
         "moduleName": "choir-notes/templates/components/column-group.hbs"
@@ -334,46 +341,55 @@ define("choir-notes/templates/components/column-group", ["exports"], function (e
       hasRendered: false,
       buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
-        var el1 = dom.createElement("span");
-        var el2 = dom.createTextNode("\n	");
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1, "class", "staff");
+        var el2 = dom.createTextNode("\n");
         dom.appendChild(el1, el2);
-        var el2 = dom.createComment("");
+        var el2 = dom.createTextNode("	");
         dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n	");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createComment("");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n	");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createComment("");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n	");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createComment("");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n	");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createComment("");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n	");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createComment("");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n	");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createComment("");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n	");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createComment("");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n	");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createComment("");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n	");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createComment("");
+        var el2 = dom.createElement("span");
+        var el3 = dom.createTextNode("\n		");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n		");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n		");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n		");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n		");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n		");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n		");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n		");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n		");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n		");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n	");
+        dom.appendChild(el2, el3);
         dom.appendChild(el1, el2);
         var el2 = dom.createTextNode("\n");
         dom.appendChild(el1, el2);
@@ -381,7 +397,7 @@ define("choir-notes/templates/components/column-group", ["exports"], function (e
         return el0;
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-        var element0 = dom.childAt(fragment, [0]);
+        var element0 = dom.childAt(fragment, [0, 2]);
         var morphs = new Array(10);
         morphs[0] = dom.createMorphAt(element0, 1, 1);
         morphs[1] = dom.createMorphAt(element0, 3, 3);
@@ -395,7 +411,7 @@ define("choir-notes/templates/components/column-group", ["exports"], function (e
         morphs[9] = dom.createMorphAt(element0, 19, 19);
         return morphs;
       },
-      statements: [["content", "staff-column", ["loc", [null, [2, 1], [2, 17]]]], ["content", "staff-column", ["loc", [null, [3, 1], [3, 17]]]], ["content", "staff-column", ["loc", [null, [4, 1], [4, 17]]]], ["content", "staff-column", ["loc", [null, [5, 1], [5, 17]]]], ["content", "staff-column", ["loc", [null, [6, 1], [6, 17]]]], ["content", "staff-column", ["loc", [null, [7, 1], [7, 17]]]], ["content", "staff-column", ["loc", [null, [8, 1], [8, 17]]]], ["content", "staff-column", ["loc", [null, [9, 1], [9, 17]]]], ["content", "staff-column", ["loc", [null, [10, 1], [10, 17]]]], ["content", "staff-column", ["loc", [null, [11, 1], [11, 17]]]]],
+      statements: [["content", "staff-column", ["loc", [null, [4, 2], [4, 18]]]], ["content", "staff-column", ["loc", [null, [5, 2], [5, 18]]]], ["content", "staff-column", ["loc", [null, [6, 2], [6, 18]]]], ["content", "staff-column", ["loc", [null, [7, 2], [7, 18]]]], ["content", "staff-column", ["loc", [null, [8, 2], [8, 18]]]], ["content", "staff-column", ["loc", [null, [9, 2], [9, 18]]]], ["content", "staff-column", ["loc", [null, [10, 2], [10, 18]]]], ["content", "staff-column", ["loc", [null, [11, 2], [11, 18]]]], ["content", "staff-column", ["loc", [null, [12, 2], [12, 18]]]], ["content", "staff-column", ["loc", [null, [13, 2], [13, 18]]]]],
       locals: [],
       templates: []
     };
@@ -416,7 +432,7 @@ define("choir-notes/templates/components/staff-column", ["exports"], function (e
             "column": 0
           },
           "end": {
-            "line": 13,
+            "line": 14,
             "column": 6
           }
         },
@@ -432,8 +448,10 @@ define("choir-notes/templates/components/staff-column", ["exports"], function (e
         dom.setAttribute(el1, "class", "staff-column");
         var el2 = dom.createTextNode("\n	");
         dom.appendChild(el1, el2);
-        var el2 = dom.createElement("div");
-        dom.setAttribute(el2, "class", "note-area");
+        var el2 = dom.createElement("input");
+        dom.setAttribute(el2, "type", "text");
+        dom.setAttribute(el2, "placeholder", "lyrics");
+        dom.setAttribute(el2, "class", "lyrics");
         dom.appendChild(el1, el2);
         var el2 = dom.createTextNode("\n	");
         dom.appendChild(el1, el2);
@@ -443,7 +461,7 @@ define("choir-notes/templates/components/staff-column", ["exports"], function (e
         var el2 = dom.createTextNode("\n	");
         dom.appendChild(el1, el2);
         var el2 = dom.createElement("div");
-        dom.setAttribute(el2, "class", "note-area");
+        dom.setAttribute(el2, "class", "note-area staff-line");
         dom.appendChild(el1, el2);
         var el2 = dom.createTextNode("\n	");
         dom.appendChild(el1, el2);
@@ -453,7 +471,7 @@ define("choir-notes/templates/components/staff-column", ["exports"], function (e
         var el2 = dom.createTextNode("\n	");
         dom.appendChild(el1, el2);
         var el2 = dom.createElement("div");
-        dom.setAttribute(el2, "class", "note-area");
+        dom.setAttribute(el2, "class", "note-area staff-line");
         dom.appendChild(el1, el2);
         var el2 = dom.createTextNode("\n	");
         dom.appendChild(el1, el2);
@@ -463,7 +481,7 @@ define("choir-notes/templates/components/staff-column", ["exports"], function (e
         var el2 = dom.createTextNode("\n	");
         dom.appendChild(el1, el2);
         var el2 = dom.createElement("div");
-        dom.setAttribute(el2, "class", "note-area");
+        dom.setAttribute(el2, "class", "note-area staff-line");
         dom.appendChild(el1, el2);
         var el2 = dom.createTextNode("\n	");
         dom.appendChild(el1, el2);
@@ -473,12 +491,17 @@ define("choir-notes/templates/components/staff-column", ["exports"], function (e
         var el2 = dom.createTextNode("\n	");
         dom.appendChild(el1, el2);
         var el2 = dom.createElement("div");
-        dom.setAttribute(el2, "class", "note-area");
+        dom.setAttribute(el2, "class", "note-area staff-line");
         dom.appendChild(el1, el2);
         var el2 = dom.createTextNode("\n	");
         dom.appendChild(el1, el2);
         var el2 = dom.createElement("div");
         dom.setAttribute(el2, "class", "note-area");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n	");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("div");
+        dom.setAttribute(el2, "class", "note-area staff-line");
         dom.appendChild(el1, el2);
         var el2 = dom.createTextNode("\n	");
         dom.appendChild(el1, el2);
@@ -531,7 +554,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("choir-notes/app")["default"].create({"name":"choir-notes","version":"0.0.0+17a1aff9"});
+  require("choir-notes/app")["default"].create({"name":"choir-notes","version":"0.0.0+99674456"});
 }
 
 /* jshint ignore:end */
