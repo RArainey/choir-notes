@@ -22,7 +22,7 @@ define('choir-notes/tests/components/staff-column.jshint', ['exports'], function
   QUnit.module('JSHint - components/staff-column.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'components/staff-column.js should pass jshint.\ncomponents/staff-column.js: line 7, col 21, \'$\' is not defined.\n\n1 error');
+    assert.ok(false, 'components/staff-column.js should pass jshint.\ncomponents/staff-column.js: line 16, col 37, Expected \'!==\' and instead saw \'!=\'.\ncomponents/staff-column.js: line 7, col 21, \'$\' is not defined.\n\n2 errors');
   });
 });
 define('choir-notes/tests/helpers/destroy-app', ['exports', 'ember'], function (exports, _ember) {
