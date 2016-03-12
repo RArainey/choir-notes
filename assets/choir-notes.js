@@ -554,7 +554,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("choir-notes/app")["default"].create({"name":"choir-notes","version":"0.0.0+99674456"});
+  require("choir-notes/app")["default"].create({"name":"choir-notes","version":"0.0.0+be3e11ff"});
 }
 
 /* jshint ignore:end */
