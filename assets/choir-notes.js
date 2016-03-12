@@ -555,7 +555,11 @@ catch(err) {
 
 if (!runningTests) {
 <<<<<<< HEAD
+<<<<<<< HEAD
   require("choir-notes/app")["default"].create({"name":"choir-notes","version":"0.0.0+be3e11ff"});
+=======
+  require("choir-notes/app")["default"].create({"name":"choir-notes","version":"0.0.0+1e68f065"});
+>>>>>>> parent of 2a6d744... changed environment.js baseURL
 =======
   require("choir-notes/app")["default"].create({"name":"choir-notes","version":"0.0.0+1e68f065"});
 >>>>>>> parent of 2a6d744... changed environment.js baseURL
